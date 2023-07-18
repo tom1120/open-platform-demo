@@ -1,12 +1,14 @@
 buildscript {
   ext.repos = {
+    maven {url 'http://192.168.99.14:8081/repository/maven-snapshots/'}
     jcenter()
     mavenCentral()
     mavenLocal()
     maven { url 'https://plugins.gradle.org/m2/' }
     maven { url 'https://repository.axelor.com/nexus/repository/maven-public/' }
   }
-  ext.platformVersion = '5.4.+'
+//  ext.platformVersion = '5.4.+'
+  ext.platformVersion = '5.4.13-SNAPSHOT'
   ext.appVersion = '5.4.0'
   repositories repos
   dependencies {
@@ -45,6 +47,7 @@ dependencies {
   implementation project(":modules:demo-sale")
   implementation project(":modules:demo-project")
   implementation project(":modules:demo-custom")
+  implementation project(":modules:librarian")
 }
 
 wrapper {
