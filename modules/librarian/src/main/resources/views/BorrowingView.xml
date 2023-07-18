@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
+    <grid title="借阅列表1" name="borrowing-grid" model="zhaoyi.librarian.db.Borrowing">
+        <field name="code"/>
+        <field name="reader"/>
+        <field name="book"/>
+        <field name="borrowTime"/>
+        <field name="days"/>
+        <field name="returnTime"/>
+        <field name="backTime"/>
+        <field name="status"/>
+    </grid>
+
+    <form title="借阅表单1" name="borrowing-form" model="zhaoyi.librarian.db.Borrowing" onNew="action-borrowing-new">
+        <panel>
+            <field name="status" showTitle="false" widget="nav-select" colSpan="12" readonly="true"/>
+            <field name="code"/>
+            <field name="reader"/>
+            <field name="book"/>
+            <field name="borrowTime"/>
+            <field name="days"/>
+            <field name="returnTime" required="false" showIf="status!='DRAFT'"/>
+            <field name="backTime" showIf="status=='DONE'"/>
+        </panel>
+        <panel name="actionsPanel" sidebar="true" stacked="true" title="操作">
+            <button name="confirmButton" onClick="save,zhaoyi.librarian.web.BorrowingController:onConfirm"
+                    title="确认借阅" colSpan="12" showIf="status=='DRAFT'"/>
+            <button name="backButton" onClick="save,zhaoyi.librarian.web.BorrowingController:onBack"
+                    title="还书" showIf="status=='WAIT'" colSpan="12"/>
+
+        </panel>
+    </form>
+    
+    <action-record name="action-borrowing-new" model="zhaoyi.librarian.db.Borrowing">
+        <field name="borrowTime" expr="eval:__datetime__"/>
+        <field name="code" expr="call: zhaoyi.librarian.service.BorrowingService:getCode()" />
+    </action-record>
+
+</object-views>

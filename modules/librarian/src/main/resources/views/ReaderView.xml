@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
+
+    <grid title="读者列表" name="reader-grid" model="zhaoyi.librarian.db.Reader">
+        <field name="name"/>
+        <field name="mobile"/>
+    </grid>
+
+    <form title="读者表单" name="reader-form" model="zhaoyi.librarian.db.Reader">
+        <panel>
+            <panel colSpan="2">
+                <field name="photo" widget="Image" colSpan="12"/>
+            </panel>
+            <panel title="读者基本信息" colSpan="10" itemSpan="6">
+                <field name="name"/>
+                <field name="mobile"/>
+                <field name="user"/>
+            </panel>
+        </panel>
+        <panel-tabs name="mainPanelTab">
+            <panel title="借阅历史记录">
+                <panel-related field="borrowingList" colSpan="12" readonly="true" orderBy="borrowTime">
+                    <field name="code"/>
+                    <field name="book"/>
+                    <field name="borrowTime"/>
+                    <field name="returnTime"/>
+                    <field name="status"/>
+                </panel-related>
+            </panel>
+            <panel title="备注">
+                <field name="notes" colSpan="12"/>
+            </panel>
+        </panel-tabs>
+        <panel sidebar="true" stacked="true" title="操作">
+            <button name="assignUser" onClick="save,zhaoyi.librarian.web.ReaderController:onAssignUser"
+                    title="设置用户" colSpan="12" showIf="user==null"/>
+        </panel>
+
+    </form>
+
+</object-views>
